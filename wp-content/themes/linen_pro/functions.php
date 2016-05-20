@@ -180,3 +180,13 @@ add_action('pre_comment_on_post', 'custom_validate_comment');
    add_filter('excerpt_more', 'new_excerpt_more');
 
 
+function linen_customizer_register(WP_Customize_Manager $wp_customize) {
+  $wp_customize->get_setting('blogname')->transport        = 'postMessage';
+  $wp_customize->get_setting('blogdescription')->transport = 'postMessage';
+}
+add_action('customize_register', 'linen_customizer_register' );
+
+function linen_customizer_js() {
+  wp_enqueue_script('linen_customizer', get_template_directory_uri() . '/javascripts/customizer.js', array('customize-preview', 'jquery'));
+}
+add_action('customize_preview_init', 'linen_customizer_js' );
