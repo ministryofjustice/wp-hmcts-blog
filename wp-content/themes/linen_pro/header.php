@@ -37,24 +37,11 @@
 	<div class="skip-content"><a href="#content"><?php _e( 'Skip to content', 'linen' ); ?></a></div>
 	<div id="wrapper" class="clear">
 		<div id="header" class="clear">
-			<?php if ($linen->logoState() == 'true' ) : ?>
-				<?php $upload_dir = wp_upload_dir(); ?>
-				<div id="title">
-					<a href="<?php echo home_url( '/' ); ?>">
-						<img src="<?php echo $linen->logoName(); ?>" alt="<?php if ($linen->logoAlt() !== '' ) echo $linen->logoAlt(); else echo bloginfo( 'name' ); ?>" /><span class="blogname">Natalie's blog</span>
-					</a>
-				</div>
-				<?php if ($linen->logoTagline() == 'true' ) : ?>
-					<div id="description">
-						<h2><?php bloginfo( 'description' ); ?></h2>
-					</div><!--end description-->
-				<?php endif; ?>
-			<?php else : ?>
-				<?php if (is_home()) echo( '<h1 id="title">' ); else echo( '<div id="title">' );?><a href="<?php echo home_url(); ?>"><?php bloginfo( 'name' ); ?></a><?php if (is_home()) echo( '</h1>' ); else echo( '</div>' );?>
-					<div id="description">
-						<h2><?php bloginfo( 'description' ); ?></h2>
-					</div><!--end description-->
-			<?php endif; ?>
+			<div id="title">
+				<a href="<?php echo home_url( '/' ); ?>">
+					<img src="<?php echo get_template_directory_uri(); ?>/images/hmcts-logo.png" alt="HM Courts &amp; Tribunals Service" /><span class="blogname"><?php echo bloginfo('name'); ?></span>
+				</a>
+			</div>
 			<?php
 				wp_nav_menu(
 					array(
@@ -63,10 +50,11 @@
 						'container_class' => 'clear',
 						'menu_class'      => 'nav',
 						'fallback_cb'     => array( &$linen, 'main_menu_fallback')
-						)
-					);
+					)
+				);
 			?>
 		</div><!--end header-->
+
 		<?php if ( (is_front_page() || $wp_query->is_posts_page) && !is_paged() && $linen->use_featured_header() ) { ?>
 			<?php get_template_part( 'tmpart-featured' ); ?>
 		<?php } ?>
@@ -74,20 +62,18 @@
 			<?php get_sidebar(); ?>
 		<?php endif; ?>
 		
-	<div id="featured" class="clear">
-		<div class="container">
-			<div id="slides">
-				<div class="slides_container">
-					<div id="slide-1" class="slide show-slide">
-						<!--<img scale="0" src="/wp-content/themes/linen_pro/images/ursula-banner.jpg" height="353" width="652">-->
-						<div class="slide-content">
-							<!--<h2>Get to know a bit more about me, what I'm up to and what makes me tick...</h2>-->
-							<p>My blog about HMCTS... please share your views.</p>
+		<div id="featured" class="clear">
+			<div class="container">
+				<div id="slides">
+					<div class="slides_container">
+						<div id="slide-1" class="slide show-slide">
+							<div class="slide-content">
+								<p class="blogdescription"><?php bloginfo('description'); ?></p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 		
 		<div id="content" <?php if ( ( is_page_template( 'tm-no-sidebar.php' ) ) || ( $linen->sidebarDisable() == 'true' ) ) echo ( 'class="no-sidebar"' ); ?>>
