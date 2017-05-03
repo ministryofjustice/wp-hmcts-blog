@@ -1,6 +1,26 @@
 <?php
 	locate_template( array( 'functions' . DIRECTORY_SEPARATOR . 'linen-extend.php' ), true );
 
+  /**
+   * Redirect all traffic to the new HMCTS blog hosted on MOJ Intranet
+   */
+  function redirect_to_new_blog() {
+    if (!is_admin() && !is_login_page()) {
+      wp_redirect('https://intranet.justice.gov.uk/blog/?agency=hmcts', 301);
+      exit;
+    }
+  }
+  add_action('init', 'redirect_to_new_blog');
+
+  /**
+   * Convenience method to determine if we're on a login page.
+   *
+   * @return bool
+   */
+  function is_login_page() {
+    return in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'));
+  }
+
 class WP_Widget_Recent_Comments2 extends WP_Widget {
 
   public function __construct() {
